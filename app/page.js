@@ -13,6 +13,11 @@ const page = () => {
     settaskname("");
     setdescription("");
   };
+  let deleteHandler = (t) => {
+    let copyTask = [...mainTask];
+    copyTask.splice(t, 1);
+    setmainTask(copyTask);
+  };
 
   let rendertask = (
     <h1 className="bg-red-300 border-2 p-5 m-2 ">No Task Available Now</h1>
@@ -27,11 +32,18 @@ const page = () => {
         >
           <h2>{item.taskname}</h2>
           <h2>{item.description}</h2>
+          <button
+            onClick={() => {
+              deleteHandler(t);
+            }}
+            className="bg-red-500 p-3 h-13 w-43 rounded"
+          >
+            Delete
+          </button>
         </div>
       );
     });
   }
-
   return (
     <>
       <h1 className="mt-10 text-4xl text-center">TODO LIST </h1>
@@ -69,5 +81,4 @@ const page = () => {
     </>
   );
 };
-
 export default page;
