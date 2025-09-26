@@ -1,8 +1,12 @@
 "use client";
 import { useState } from "react";
 import React from "react";
+import { motion } from "motion/react";
+import { useRef } from "react";
 
 const page = () => {
+  const constraintsRef = useRef(null);
+
   const [taskname, settaskname] = useState("");
   const [description, setdescription] = useState("");
   const [mainTask, setmainTask] = useState([]);
@@ -26,7 +30,13 @@ const page = () => {
   if (mainTask.length > 0) {
     rendertask = mainTask.map((item, t) => {
       return (
-        <div
+        <motion.div
+          drag
+          dragConstraints={constraintsRef}
+          whileDrag={{
+            scale: 1.01,
+            boxShadow: "0px 10px 20px rgba(0,0,0,0.2)",
+          }}
           key={t}
           className=" flex justify-between items-center bg-green-400 border-2 p-5 m-2 rounded text-2xl"
         >
@@ -40,7 +50,7 @@ const page = () => {
           >
             Delete
           </button>
-        </div>
+        </motion.div>
       );
     });
   }
@@ -77,7 +87,9 @@ const page = () => {
           Add
         </button>
       </form>
-      <div className="m-10">{rendertask}</div>
+      <div ref={constraintsRef} className="m-10">
+        {rendertask}
+      </div>
     </>
   );
 };
